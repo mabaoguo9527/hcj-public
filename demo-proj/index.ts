@@ -1,1 +1,12 @@
 console.log("Hello via Bun!");
+//console.log("Bun version:", Bun.version);
+console.log("========================================");
+console.log("process env:", process.env.NODE_ENV);
+console.log("process cwd:", process.cwd());
+console.log("process argv:", process.argv);
+console.log("process execPath:", process.execPath);
+console.log("process execArgv:", process.execArgv);
+console.log("process pid:", process.pid);
+console.log("process ppid:", process.ppid);
+console.log("process uptime:", process.uptime());
+console.log("process version:", process.version);
