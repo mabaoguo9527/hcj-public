@@ -1,0 +1,4 @@
+packages:
+  # packages/ 下的所有模块自动纳入 workspace
+  # 注意：目录下没有 package.json 的会被自动忽略
+  - 'packages/*'

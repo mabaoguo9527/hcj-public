@@ -1,0 +1,18 @@
+{
+  "name": "hcj-public",
+  "private": true,
+  "packageManager": "pnpm@10.28.2",
+  "scripts": {
+    "dev:react-vite": "pnpm --filter demo-react-vite dev",
+    "dev:redux": "pnpm --filter demo-redux dev",
+    "dev:redux-classic": "pnpm --filter demo-redux-classic dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

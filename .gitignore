@@ -1,5 +1,11 @@
-# dependencies (bun install)
-demo-proj/node_modules
+# dependencies
+node_modules
+
+# lockfiles are managed at workspace root
+packages/*/package-lock.json
+packages/*/pnpm-lock.yaml
+packages/*/bun.lock
+packages/*/bun.lockb
 
 # output
 out
