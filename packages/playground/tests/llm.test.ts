@@ -1,20 +1,21 @@
 import { describe, it, expect } from 'vitest';
-import { complete, stream, getModel } from '@mariozechner/pi-ai';
-import { buildContext, weatherTool, executeWeatherTool } from '../src/tools';
+import { builtinModels } from '@earendil-works/pi-ai/providers/all';
+import { buildContext, weatherTool, executeWeatherTool } from '../src/pi-ai/tools';
 
 /**
  * 集成测试：真实调用 LLM。
  * 未设置 OPENAI_API_KEY 时自动跳过，设置后运行：
- *   OPENAI_API_KEY=sk-... pnpm --filter demo-pi-ai test
+ *   OPENAI_API_KEY=sk-... pnpm --filter playground test
  */
 const hasApiKey = Boolean(process.env.OPENAI_API_KEY);
 
 describe.skipIf(!hasApiKey)('pi-ai 真实调用（需要 OPENAI_API_KEY）', () => {
-  const model = getModel('openai', 'gpt-4o-mini');
+  const models = builtinModels();
+  const model = models.getModel('openai', 'gpt-4o-mini');
 
   it('complete 返回文本回复并带 usage 统计', async () => {
     const context = buildContext('You are a helpful assistant.', 'Reply with exactly: hello');
-    const response = await complete(model, context);
+    const response = await models.complete(model!, context);
 
     const text = response.content
       .filter((block) => block.type === 'text')
@@ -28,7 +29,7 @@ describe.skipIf(!hasApiKey)('pi-ai 真实调用（需要 OPENAI_API_KEY）', () 
 
   it('stream 事件流最终产出完整消息', async () => {
     const context = buildContext('You are a helpful assistant.', 'Count from 1 to 3.');
-    const s = stream(model, context);
+    const s = models.stream(model!, context);
 
     let sawTextDelta = false;
     for await (const event of s) {
@@ -47,7 +48,7 @@ describe.skipIf(!hasApiKey)('pi-ai 真实调用（需要 OPENAI_API_KEY）', () 
       [weatherTool],
     );
 
-    const first = await complete(model, context);
+    const first = await models.complete(model!, context);
     context.messages.push(first);
 
     const toolCall = first.content.find((block) => block.type === 'toolCall');
@@ -63,7 +64,7 @@ describe.skipIf(!hasApiKey)('pi-ai 真实调用（需要 OPENAI_API_KEY）', () 
         timestamp: Date.now(),
       });
 
-      const second = await complete(model, context);
+      const second = await models.complete(model!, context);
       const text = second.content
         .filter((block) => block.type === 'text')
         .map((block) => (block.type === 'text' ? block.text : ''))

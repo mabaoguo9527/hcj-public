@@ -1,4 +1,4 @@
-import { Type, StringEnum, type Tool, type Context } from '@mariozechner/pi-ai';
+import { Type, StringEnum, type Tool, type Context } from '@earendil-works/pi-ai';
 
 /** 示例工具：查询天气（仅做演示，返回固定数据） */
 export const weatherTool: Tool = {
