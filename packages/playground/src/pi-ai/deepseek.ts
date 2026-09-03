@@ -1,12 +1,9 @@
 /**
  * 示例：使用 pi-ai 向 DeepSeek 发起普通请求和流式请求。
  *
- * 运行前设置 API key：
- *   export DEEPSEEK_API_KEY=sk-...
- *
  * 运行（任选其一）：
- *   npx tsx packages/playground/src/pi-ai/index.ts
- *   node --experimental-strip-types packages/playground/src/pi-ai/index.ts
+ *   npx tsx src/pi-ai/index.ts
+ *   node src/pi-ai/index.ts
  */
 import { builtinModels } from '@earendil-works/pi-ai/providers/all';
 import {

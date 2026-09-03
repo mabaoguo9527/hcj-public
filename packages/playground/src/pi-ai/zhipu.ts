@@ -3,6 +3,8 @@
  *
  * 运行：
  *   ZAI_CODING_CN_API_KEY=... npx tsx packages/playground/src/pi-ai/zhipu.ts
+ *   npx tsx src/pi-ai/zhipu.ts
+ *   node src/pi-ai/zhipu.ts
  */
 import { builtinModels } from '@earendil-works/pi-ai/providers/all';
 import {
