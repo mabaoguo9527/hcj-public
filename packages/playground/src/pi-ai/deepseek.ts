@@ -43,6 +43,11 @@ async function runStreamingExample(models: Models, model: Model<Api>): Promise<v
         messages: [
             { role: 'user', content: '用两句话介绍流式响应的优势。', timestamp: Date.now() },
         ],
+    }, {
+        reasoning: 'max',
+        onPayload: (payload) => {
+            console.log('提供商载荷：', JSON.stringify(payload, null, 2));
+        }
     });
 
     process.stdout.write('\nStreaming reply: ');
@@ -62,6 +67,11 @@ async function runExample(models: Models, model: Model<Api>): Promise<void> {
     const response = await models.complete(model, {
         systemPrompt: 'You are a helpful assistant.',
         messages: [{ role: 'user', content: '用一句话介绍你自己。', timestamp: Date.now() }],
+    }, {
+        reasoning: 'max',
+        onPayload: (payload) => {
+            console.log('提供商载荷：', JSON.stringify(payload, null, 2));
+        }
     });
 
     console.log('Reply:', contentText(response.content));

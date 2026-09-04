@@ -79,7 +79,7 @@ async function main(): Promise<void> {
   console.log('BTI Models:', models);
   const model = requireModel(models);
   console.log('ZAI Models:', models.getModels('zai-coding-cn'));
-  console.log('ZAI Models:', models.getModels('zai'));
+  //console.log('ZAI Models:', models.getModels('zai'));
 
   // 运行普通请求示例
   // await runExample(models, model);
