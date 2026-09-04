@@ -9,7 +9,7 @@ import 'dotenv/config';
 
 
 import { zaiCodingCnProvider } from '@earendil-works/pi-ai/providers/zai-coding-cn';
-import {printUsage} from "./common";
+import {printUsage} from "./common.ts";
 import {builtinModels, builtinProviders} from "@earendil-works/pi-ai/providers/all";
 
 // ...“支持的提供商”列表中每个提供商各有一个模块

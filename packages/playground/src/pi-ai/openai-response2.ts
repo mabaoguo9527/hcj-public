@@ -1,6 +1,13 @@
+/**
+ * NODE_USE_ENV_PROXY=1 \
+ * HTTPS_PROXY=http://127.0.0.1:9000 \
+ * NODE_EXTRA_CA_CERTS=~/tmp/20260904/reqable-ca.crt \
+ * node src/pi-ai/openai-response2.ts
+ */
 import { createModels, createProvider, envApiKeyAuth, hasApi, type Context, type Model } from '@earendil-works/pi-ai';
 import { openAIResponsesApi } from '@earendil-works/pi-ai/api/openai-responses.lazy';
-import {printUsage} from "./common";
+import 'dotenv/config';
+import {printUsage} from "./common.ts";
 
 const BASE_URL = 'https://open.bigmodel.cn/api/v1'; // 智谱国内站 OpenAI Responses 端点
 
@@ -45,7 +52,7 @@ const zai = createProvider({
 
 const models = createModels();
 models.setProvider(zai);
-const model = models.getModel('zai-coding-cn-responses', 'glm-5.3')!;
+const model = models.getModel('zai-coding-cn-responses', 'glm-5.3-flash')!;
 
 // ------------------------------------------------------------------------
 

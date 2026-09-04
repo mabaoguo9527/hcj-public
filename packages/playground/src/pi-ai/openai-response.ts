@@ -1,7 +1,7 @@
 import { streamSimple } from '@earendil-works/pi-ai/api/openai-responses';
 import { builtinModels } from "@earendil-works/pi-ai/providers/all";
 import 'dotenv/config';
-import { printUsage } from "./common";
+import { printUsage } from "./common.ts";
 import { getSupportedThinkingLevels, hasApi } from "@earendil-works/pi-ai";
 
 const models = builtinModels();
