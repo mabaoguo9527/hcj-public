@@ -29,7 +29,9 @@ const resourceLoader = new DefaultResourceLoader({
 	additionalExtensionPaths: ["./my-logging-extension.ts", "./my-safety-extension.ts"],
 	extensionFactories: [
 		(pi) => {
-			pi.on("agent_start", () => {
+			pi.on("agent_start", (event, ctx) => {
+				console.log('[Inline Extension] event:', event)
+				console.log('[Inline Extension] ctx:', ctx)
 				console.log("[Inline Extension] Agent starting");
 			});
 		},
