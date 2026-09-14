@@ -2,3 +2,9 @@ packages:
   # packages/ 下的所有模块自动纳入 workspace
   # 注意：目录下没有 package.json 的会被自动忽略
   - 'packages/*'
+allowBuilds:
+  '@google/genai': false # 安装脚本全是 no-op，无需放行
+  esbuild: true # vite 依赖其 postinstall 下载平台二进制
+  protobufjs: true # 轻量 postinstall，常规放行
+  sharp: false # create-next-app 模板默认；sharp 0.33+ 走 prebuilt 二进制，无需脚本
+  'unrs-resolver': false # eslint-config-next 依赖，自带预编译产物
