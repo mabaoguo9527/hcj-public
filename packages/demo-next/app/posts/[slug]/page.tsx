@@ -3,14 +3,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPostBySlug, posts } from "@/lib/posts";
 import LikeButton from "@/components/LikeButton";
+import PostContent from "@/components/PostContent";
 
-// ✨ Next 特性：SSG 静态生成
-// 构建时对每个 slug 生成一个静态 HTML 页面，访问速度极快
+// ✨ SSG 依然生效：构建时为每篇文章生成静态"外壳"
 export function generateStaticParams() {
   return posts.map((post) => ({ slug: post.slug }));
 }
 
-// ✨ Next 特性：根据文章内容动态生成 <head> 标签
+// ✨ 元信息仍由服务端生成（SEO 不受客户端取数影响）
 export async function generateMetadata(
   { params }: PageProps<'/posts/[slug]'>,
 ): Promise<Metadata> {
@@ -22,18 +22,14 @@ export async function generateMetadata(
   };
 }
 
-// ✨ Next 特性：动态路由参数在 params 里（Next 15+ 是 Promise，必须 await）
+// 🟦 服务端组件：负责"壳"——校验 slug、标题、日期、交互件
 export default async function PostPage({
   params,
 }: PageProps<'/posts/[slug]'>) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
 
-  // ✨ Next 特性：数据不存在时渲染 404 页面（可用 app/not-found.tsx 自定义）
   if (!post) notFound();
-
-  // 正文按空行拆成段落
-  const paragraphs = post.content.split("\n\n");
 
   return (
     <article>
@@ -44,16 +40,13 @@ export default async function PostPage({
         ← 返回列表
       </Link>
 
+      {/* ---- 以下由服务端渲染，HTML 里直接就有 ---- */}
       <h1 className="mt-4 text-3xl font-bold tracking-tight">{post.title}</h1>
       <time className="mt-2 block text-sm text-zinc-400">{post.date}</time>
 
-      <div className="mt-6 space-y-4 leading-8 text-zinc-700 dark:text-zinc-300">
-        {paragraphs.map((p, i) => (
-          <p key={i}>{p}</p>
-        ))}
-      </div>
+      {/* ---- 正文也是服务端渲染：同样只传 slug，但代码不再进浏览器包 ---- */}
+      <PostContent slug={slug} />
 
-      {/* 服务端组件（本页面）把数据作为 props 传给客户端组件 */}
       <div className="mt-10 border-t border-zinc-200 pt-6 dark:border-zinc-800">
         <LikeButton initialLikes={Math.floor(post.slug.length * 3.7) + 1} />
       </div>
